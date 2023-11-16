@@ -1,10 +1,10 @@
 User/ch32v00x_it.o: ../User/ch32v00x_it.c \
- C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT\User/ch32v00x_it.h \
+ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT-FIRMWARE\User/ch32v00x_it.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Debug/debug.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Core/core_riscv.h \
- C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT\User/system_ch32v00x.h \
- C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT\User/ch32v00x_conf.h \
+ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT-FIRMWARE\User/system_ch32v00x.h \
+ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT-FIRMWARE\User/ch32v00x_conf.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_adc.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_dbgmcu.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_dma.h \
@@ -23,7 +23,7 @@ User/ch32v00x_it.o: ../User/ch32v00x_it.c \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_opa.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h
 
-C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT\User/ch32v00x_it.h:
+C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT-FIRMWARE\User/ch32v00x_it.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Debug/debug.h:
 
@@ -31,9 +31,9 @@ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Core/core_riscv.h:
 
-C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT\User/system_ch32v00x.h:
+C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT-FIRMWARE\User/system_ch32v00x.h:
 
-C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT\User/ch32v00x_conf.h:
+C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT-FIRMWARE\User/ch32v00x_conf.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_adc.h:
 

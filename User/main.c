@@ -28,27 +28,13 @@
 
 /* Global define */
 
-#define TxSize1    (size(TxBuffer1))
-#define size(a)    (sizeof(a) / sizeof(*(a)))
-
-#define DEBUGPRINT
-
-
-
 /* Global typedef */
-typedef enum
-{
-    FAILED = 0,
-    PASSED = !FAILED
-} TestStatus;
 
 /* Global Variable */
-u8 TxBuffer1[] = "*Buffer1 Send from USART1 using Interrupt!";
-u8 RxBuffer1[TxSize1] = {0};
 
-volatile u8 TxCnt1 = 0, RxCnt1 = 0;
-
-volatile u8 Rxfinish1 = 0;
+uint8_t RxBuffer1[256] = {0};
+uint8_t RxCnt1 = 0;
+uint8_t Rxfinish1 = 0;
 
 uint8_t SW2Flag = 0;
 uint8_t SW3Flag = 0;
@@ -156,6 +142,7 @@ void BlinkLED(void)
     GPIO_SetBits(LED_PORT, LED_PIN);
     Delay_Ms(500);
 }
+
 void Beep(void)
 {
     GPIO_SetBits(BUZ_PORT, BUZ_PIN);
@@ -319,106 +306,7 @@ void KeysConfig(void)
        NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
        NVIC_Init(&NVIC_InitStructure);
 }
-/*********************************************************************
- * @fn      USARTx_CFG
- *
- * @brief   Initializes the USART2 & USART3 peripheral.
- *
- * @return  none
- */
-void UsartConfig(void)
-{
-    GPIO_InitTypeDef  GPIO_InitStructure = {0};
-    USART_InitTypeDef USART_InitStructure = {0};
-    NVIC_InitTypeDef  NVIC_InitStructure = {0};
 
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD | RCC_APB2Periph_USART1, ENABLE);
-    //GPIO_PinRemapConfig(GPIO_PartialRemap2_USART1, ENABLE);
-
-    /* USART1 TX-->D.5   RX-->D.6 */
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-    GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-    GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-    USART_InitStructure.USART_BaudRate = 115200;
-    USART_InitStructure.USART_WordLength = USART_WordLength_8b;
-    USART_InitStructure.USART_StopBits = USART_StopBits_1;
-    USART_InitStructure.USART_Parity = USART_Parity_No;
-    USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-    USART_InitStructure.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
-
-    USART_Init(USART1, &USART_InitStructure);
-    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-
-    NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&NVIC_InitStructure);;
-
-    USART_Cmd(USART1, ENABLE);
-}
-
-void UART_DEBUG_PRINT(uint8_t type, uint8_t* buffer)
-{
-    uint16_t tmp = 0;
-    uint16_t len = 0;
-
-#ifdef DEBUGPRINT
-    if(type == DEBUG_INFO)
-    {
-        UARTSendString("[INFO]:");
-    }
-    else if (type == DEBUG_ERROR)
-    {
-        UARTSendString("[ERROR]:");
-    }
-    else if (type == DEBUG_ALERT)
-    {
-        UARTSendString("[ALERT]:");
-    }
-    UARTSendString(buffer);
-#endif
-
-}
-
-void UARTSendString(uint8_t* buffer)
-{
-    uint16_t tmp = 0;
-    uint16_t len = 0;
-
-    len = strlen(buffer);
-
-    for(tmp =0; tmp < len; tmp++)
-    {
-        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET) /* waiting for sending finish */
-        {
-        }
-        USART_SendData(USART1, buffer[tmp]);
-    }
-
-
-}
-
-void UARTSendBuffer(uint8_t* buffer, uint16_t length)
-{
-    uint16_t tmp = 0;
-
-
-    for(tmp =0; tmp < length; tmp++)
-    {
-        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET) /* waiting for sending finish */
-        {
-        }
-        USART_SendData(USART1, buffer[tmp]);
-    }
-
-}
 
 void IIC_Init(u32 bound, u16 address)
 {
@@ -546,27 +434,27 @@ uint32_t uid3 = 0;
     ADCConfig();
 
     Beep();
-    UART_DEBUG_PRINT(0, "\r\n\r\n");
-    UART_DEBUG_PRINT(DEBUG_INFO, "POWER UP BEEP\r\n");
+    UARTDebugPrint(0, "\r\n\r\n");
+    UARTDebugPrint(DEBUG_INFO, "POWER UP BEEP\r\n");
 
-    UART_DEBUG_PRINT(DEBUG_INFO, "CH32V003 DEV KIT 1.0\r\n");
-    UART_DEBUG_PRINT(DEBUG_INFO, "DEVELOPED BY: CAPUF EMBEDDED\r\n");
-    UART_DEBUG_PRINT(DEBUG_INFO, "UART: 115200-1-n\r\n");
+    UARTDebugPrint(DEBUG_INFO, "CH32V003 DEV KIT 1.0\r\n");
+    UARTDebugPrint(DEBUG_INFO, "DEVELOPED BY: CAPUF EMBEDDED\r\n");
+    UARTDebugPrint(DEBUG_INFO, "UART: 115200-1-n\r\n");
     Delay_Ms(500);
 
     // Draw Patterns on OLED Display at Power Up
     OLEDI2CPattern();
-    UART_DEBUG_PRINT(DEBUG_INFO, "OLED CONFIG DONE\r\n");
+    UARTDebugPrint(DEBUG_INFO, "OLED CONFIG DONE\r\n");
     Delay_Ms(10);
 
     ADC_SoftwareStartInjectedConvCmd(ADC1, ENABLE);
-    UART_DEBUG_PRINT(DEBUG_INFO, "ADC CONFIG DONE\r\n");
+    UARTDebugPrint(DEBUG_INFO, "ADC CONFIG DONE\r\n");
 
     RGB_PWMConfig(1000 - 1, 48 - 1, 0);
     SetRGB(0x00FFFFFF);//RGB LED OFF
-    UART_DEBUG_PRINT(DEBUG_INFO, "RGB LED CONFIG DONE\r\n");
+    UARTDebugPrint(DEBUG_INFO, "RGB LED CONFIG DONE\r\n");
 
-    UART_DEBUG_PRINT(DEBUG_INFO, "SYSTEM CONFIG COMPLETE\r\n");
+    UARTDebugPrint(DEBUG_INFO, "SYSTEM CONFIG COMPLETE\r\n");
 
     OLEDI2CPutStr(2, 0, "  CH32V003 DEV KIT", 18);
     OLEDI2CPutStr(3, 0, "    DEVELOPED BY", 16);
@@ -575,7 +463,7 @@ uint32_t uid3 = 0;
     Delay_Ms(2000);
 
     //RGB LED TEST
-    UART_DEBUG_PRINT(DEBUG_INFO, "RGB LED TEST COLOR\r\n");
+    UARTDebugPrint(DEBUG_INFO, "RGB LED TEST COLOR\r\n");
     SetRGB(0x0000FFFF); // RED
     Delay_Ms(500);
     SetRGB(0x00FF00FF); // GREEN
@@ -585,24 +473,24 @@ uint32_t uid3 = 0;
     SetRGB(0x00FFFFFF);//RGB LED OFF
 
     OLEDI2CFillScreen(0x00); // Clear OLED Display
-    UART_DEBUG_PRINT(DEBUG_INFO, "ENTERING SUPERLOOP\r\n");
+    UARTDebugPrint(DEBUG_INFO, "ENTERING SUPERLOOP\r\n");
 
     while(1)
     {
 
         OLEDI2CPutStr(0, 0, "CH32V003 DEV KIT", 16);
-        UART_DEBUG_PRINT(DEBUG_INFO, "MEASURE T&H\r\n");
+        UARTDebugPrint(DEBUG_INFO, "MEASURE T&H\r\n");
 
         AHT20ReadTH(&T, &H);
 
         DigitSeperation(H, digitSep, 3);
 
         //Send Humidity reading on debug message
-        UART_DEBUG_PRINT(DEBUG_INFO, "HUMIDITY: ");
+        UARTDebugPrint(DEBUG_INFO, "HUMIDITY: ");
         UARTSendBuffer(digitSep, 2);
-        UART_DEBUG_PRINT(0, ".");
+        UARTDebugPrint(0, ".");
         UARTSendBuffer(digitSep+2, 1);
-        UART_DEBUG_PRINT(0, " %RH\r\n");
+        UARTDebugPrint(0, " %RH\r\n");
 
         //Display Humidity Reading on the Display
         OLEDI2CPutStr(2, 0, "HUMIDITY: ", 10);
@@ -614,11 +502,11 @@ uint32_t uid3 = 0;
         DigitSeperation(T, digitSep, 3);
 
         //Send Temperature reading on debug message
-        UART_DEBUG_PRINT(DEBUG_INFO, "TEMPERATURE: ");
+        UARTDebugPrint(DEBUG_INFO, "TEMPERATURE: ");
         UARTSendBuffer(digitSep, 2);
-        UART_DEBUG_PRINT(0, ".");
+        UARTDebugPrint(0, ".");
         UARTSendBuffer(digitSep+2, 1);
-        UART_DEBUG_PRINT(0, " Deg C\r\n");
+        UARTDebugPrint(0, " Deg C\r\n");
 
         //Display Humidity Reading on the Display
         OLEDI2CPutStr(4, 0, "TEMPERATURE: ", 13);
@@ -641,18 +529,18 @@ uint32_t uid3 = 0;
         OLEDI2CPutStr(6, 78, digitSep, 4);
         OLEDI2CPutStr(6, 102, "mV", 2);
 
-        UART_DEBUG_PRINT(DEBUG_INFO, "POT VOLTAGE: ");
+        UARTDebugPrint(DEBUG_INFO, "POT VOLTAGE: ");
         UARTSendBuffer(digitSep, 4);
-        UART_DEBUG_PRINT(0, "mV\r\n");
+        UARTDebugPrint(0, "mV\r\n");
         Delay_Ms(100);
 
-        UART_DEBUG_PRINT(DEBUG_INFO, "LED BLINK\r\n");
+        UARTDebugPrint(DEBUG_INFO, "LED BLINK\r\n");
         BlinkLED();
 
 
         if(Rxfinish1)
         {
-            UART_DEBUG_PRINT(DEBUG_INFO, "UART DATA RECEIVED :)\r\n");
+            UARTDebugPrint(DEBUG_INFO, "UART DATA RECEIVED :)\r\n");
             Rxfinish1 = 0;
         }
 
@@ -660,6 +548,30 @@ uint32_t uid3 = 0;
     }
 }
 
+
+
+
+void ADC1_IRQHandler() __attribute__((interrupt("WCH-Interrupt-fast")));
+
+/**
+
+ * The function ADC1_IRQHandler handles the interrupt for ADC1 and prints the value of the injected
+
+ * conversion.
+
+ */
+
+void ADC1_IRQHandler()
+{
+
+    if (ADC_GetITStatus(ADC1, ADC_IT_JEOC) == SET)
+    {
+        adcFlag = 1;
+        adcReading = ADC_GetInjectedConversionValue(ADC1, ADC_InjectedChannel_1);
+        ADC_ClearITPendingBit(ADC1, ADC_IT_JEOC);
+    }
+
+}
 
 void USART1_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 
@@ -684,27 +596,5 @@ void USART1_IRQHandler(void)
             Rxfinish1 = 1;
         }
     }
-}
-
-void ADC1_IRQHandler() __attribute__((interrupt("WCH-Interrupt-fast")));
-
-/**
-
- * The function ADC1_IRQHandler handles the interrupt for ADC1 and prints the value of the injected
-
- * conversion.
-
- */
-
-void ADC1_IRQHandler()
-{
-
-    if (ADC_GetITStatus(ADC1, ADC_IT_JEOC) == SET)
-    {
-        adcFlag = 1;
-        adcReading = ADC_GetInjectedConversionValue(ADC1, ADC_InjectedChannel_1);
-        ADC_ClearITPendingBit(ADC1, ADC_IT_JEOC);
-    }
-
 }
 

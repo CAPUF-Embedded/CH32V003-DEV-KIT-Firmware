@@ -5,13 +5,9 @@
 */
 
 #include "debug.h"
-#include "string.h"
 #include "AHT20.h"
 #include "96OLEDI2C.h"
-
-#define DEBUG_INFO  1
-#define DEBUG_ALERT 2
-#define DEBUG_ERROR 3
+#include "SerialPort.h"
 
 /* PWM Output Mode Definition */
 #define PWM_MODE1 0

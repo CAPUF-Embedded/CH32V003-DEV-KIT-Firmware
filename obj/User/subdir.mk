@@ -7,6 +7,7 @@
 C_SRCS += \
 ../User/96OLEDI2C.c \
 ../User/AHT20.c \
+../User/SerialPort.c \
 ../User/ch32v00x_it.c \
 ../User/main.c \
 ../User/system_ch32v00x.c 
@@ -14,6 +15,7 @@ C_SRCS += \
 OBJS += \
 ./User/96OLEDI2C.o \
 ./User/AHT20.o \
+./User/SerialPort.o \
 ./User/ch32v00x_it.o \
 ./User/main.o \
 ./User/system_ch32v00x.o 
@@ -21,6 +23,7 @@ OBJS += \
 C_DEPS += \
 ./User/96OLEDI2C.d \
 ./User/AHT20.d \
+./User/SerialPort.d \
 ./User/ch32v00x_it.d \
 ./User/main.d \
 ./User/system_ch32v00x.d 
