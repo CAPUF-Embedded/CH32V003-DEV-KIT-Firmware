@@ -9,6 +9,7 @@ C_SRCS += \
 ../User/AHT20.c \
 ../User/SerialPort.c \
 ../User/ch32v00x_it.c \
+../User/i2c_common.c \
 ../User/main.c \
 ../User/system_ch32v00x.c 
 
@@ -17,6 +18,7 @@ OBJS += \
 ./User/AHT20.o \
 ./User/SerialPort.o \
 ./User/ch32v00x_it.o \
+./User/i2c_common.o \
 ./User/main.o \
 ./User/system_ch32v00x.o 
 
@@ -25,6 +27,7 @@ C_DEPS += \
 ./User/AHT20.d \
 ./User/SerialPort.d \
 ./User/ch32v00x_it.d \
+./User/i2c_common.d \
 ./User/main.d \
 ./User/system_ch32v00x.d 
 

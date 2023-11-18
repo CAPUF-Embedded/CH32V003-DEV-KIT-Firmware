@@ -110,22 +110,11 @@ const unsigned char AARR_GlcdFont_U8[][7] =
 
 void OLEDI2CCMD(uint8_t deviceAddr, uint8_t command)
 {
-    while( I2C_GetFlagStatus( I2C1, I2C_FLAG_BUSY ) != RESET );
-    I2C_GenerateSTART( I2C1, ENABLE );
+    uint8_t buffer[4] = {0};
 
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_MODE_SELECT ) );
-    I2C_Send7bitAddress( I2C1, (deviceAddr << 1), I2C_Direction_Transmitter );
-
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) );
-
-    I2C_SendData( I2C1, (u8)(0x00));
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-
-
-    I2C_SendData( I2C1, (u8)(command) );
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-
-    I2C_GenerateSTOP( I2C1, ENABLE );
+    buffer[0] = 0x00;
+    buffer[1] = command;
+    I2CWriteBytes(deviceAddr, buffer, 2);
 }
 
 void OLEDI2CInit(void)
@@ -185,34 +174,23 @@ void OLEDI2CSetCol(uint8_t col)
 
 void OLEDI2CPutChar(uint8_t line, uint8_t startingColumn, char characterToPrint, uint8_t dataLength)
 {
-    //uint8_t loop = 0;
+
+    uint8_t buffer[10] = {0};
+    uint8_t columnNumber = 0;
+    uint8_t tmp = 0;
+    buffer[0] = 0x40;
 
     OLEDI2CSetPage(line);
     OLEDI2CSetCol(startingColumn);
 
-    uint8_t columnNumber = 0;
-    uint8_t tmp = 0;
+    for(columnNumber = 0; columnNumber < dataLength; columnNumber++)
+    {
+        tmp = AARR_GlcdFont_U8[characterToPrint-32][columnNumber];
+        buffer[columnNumber + 1] = tmp;
+    }
 
-        while( I2C_GetFlagStatus( I2C1, I2C_FLAG_BUSY ) != RESET );
-        I2C_GenerateSTART( I2C1, ENABLE );
+    I2CWriteBytes(OLEDI2C_ADDR, buffer, dataLength+1);
 
-        while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_MODE_SELECT ) );
-        I2C_Send7bitAddress( I2C1, (OLEDI2C_ADDR << 1), I2C_Direction_Transmitter );
-
-        while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) );
-
-        I2C_SendData( I2C1, (u8)(0x40));
-        while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-
-
-        for(columnNumber = 0; columnNumber < dataLength; columnNumber++)
-        {
-            tmp = AARR_GlcdFont_U8[characterToPrint-32][columnNumber];
-            I2C_SendData( I2C1, (u8)tmp );
-            while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-        }
-
-        I2C_GenerateSTOP( I2C1, ENABLE );
 
 }
 
@@ -250,28 +228,15 @@ void OLEDI2CFillScreen(uint8_t data)
 void OLEDI2CWriteMuiltiByte(uint8_t deviceAddr, uint8_t memoryAddr, uint8_t *buffer, uint16_t length)
 {
     uint8_t columnNumber = 0;
-    uint8_t tmp = 0;
-
-    while( I2C_GetFlagStatus( I2C1, I2C_FLAG_BUSY ) != RESET );
-    I2C_GenerateSTART( I2C1, ENABLE );
-
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_MODE_SELECT ) );
-    I2C_Send7bitAddress( I2C1, (deviceAddr << 1), I2C_Direction_Transmitter );
-
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) );
-
-    I2C_SendData( I2C1, (u8)(memoryAddr));
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-
+    uint8_t buffer1[130] = {0};
+    buffer1[0] = memoryAddr;
 
     for(columnNumber = 0; columnNumber < length; columnNumber++)
     {
-        tmp = buffer[columnNumber];
-        I2C_SendData( I2C1, (u8)(tmp) );
-        while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
+        buffer1[columnNumber + 1] = buffer[columnNumber];;
     }
 
-    I2C_GenerateSTOP( I2C1, ENABLE );
+    I2CWriteBytes(deviceAddr, buffer1, length+1);
 
 }
 

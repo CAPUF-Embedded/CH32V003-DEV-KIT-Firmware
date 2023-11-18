@@ -3,23 +3,14 @@
 int8_t AHT20FReset(void)
 {
     uint8_t ret[4] = {0};
-    while( I2C_GetFlagStatus( I2C1, I2C_FLAG_BUSY ) != RESET );
-    I2C_GenerateSTART( I2C1, ENABLE );
+    uint8_t buffer[4] = {0};
 
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_MODE_SELECT ) );
-    I2C_Send7bitAddress( I2C1, (TH_SENSOR_ADDR << 1), I2C_Direction_Transmitter );
-
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) );
-
-
-    I2C_SendData( I2C1, (u8)(0xBA) );
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-
-    I2C_GenerateSTOP( I2C1, ENABLE );
+    buffer[0] = 0xBA;
+    I2CWriteBytes(TH_SENSOR_ADDR, buffer, 2);
 
     Delay_Ms(100);
 
-    I2CReadBytes(TH_SENSOR_ADDR, &ret, 1);
+    I2CReadBytes(TH_SENSOR_ADDR, ret, 1);
     return ret[0];
 }
 
@@ -27,28 +18,15 @@ int8_t AHT20FReset(void)
 uint8_t AHT20FInit(void)
 {
     uint8_t ret[4] = {0};
-    while( I2C_GetFlagStatus( I2C1, I2C_FLAG_BUSY ) != RESET );
-    I2C_GenerateSTART( I2C1, ENABLE );
-
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_MODE_SELECT ) );
-    I2C_Send7bitAddress( I2C1, (TH_SENSOR_ADDR << 1), I2C_Direction_Transmitter );
-
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) );
-
-
-    I2C_SendData( I2C1, (u8)(0xBE) );
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-
-    I2C_SendData( I2C1, (u8)(0x08) );
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-
-    I2C_SendData( I2C1, (u8)(0x00) );
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-    I2C_GenerateSTOP( I2C1, ENABLE );
+    uint8_t buffer[4] = {0};
+    buffer[0] = 0xBE;
+    buffer[1] = 0x08;
+    buffer[2] = 0x00;
+    I2CWriteBytes(TH_SENSOR_ADDR, buffer, 3);
 
     Delay_Ms(100);
 
-    I2CReadBytes(TH_SENSOR_ADDR, &ret, 1);
+    I2CReadBytes(TH_SENSOR_ADDR, ret, 1);
     return ret[0];
 }
 
@@ -56,28 +34,16 @@ uint8_t AHT20FInit(void)
 uint8_t AHT20Measure(void)
 {
     uint8_t ret[4] = {0};
-    while( I2C_GetFlagStatus( I2C1, I2C_FLAG_BUSY ) != RESET );
-    I2C_GenerateSTART( I2C1, ENABLE );
+    uint8_t buffer[4] = {0};
 
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_MODE_SELECT ) );
-    I2C_Send7bitAddress( I2C1, (TH_SENSOR_ADDR << 1), I2C_Direction_Transmitter );
-
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) );
-
-
-    I2C_SendData( I2C1, (u8)(0xAC) );
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-
-    I2C_SendData( I2C1, (u8)(0x33) );
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-
-    I2C_SendData( I2C1, (u8)(0x00) );
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) );
-    I2C_GenerateSTOP( I2C1, ENABLE );
+    buffer[0] = 0xAC;
+    buffer[1] = 0x33;
+    buffer[2] = 0x00;
+    I2CWriteBytes(TH_SENSOR_ADDR, buffer, 3);
 
     Delay_Ms(100);
 
-    I2CReadBytes(TH_SENSOR_ADDR, &ret, 1);
+    I2CReadBytes(TH_SENSOR_ADDR, ret, 1);
     return ret[0];
 }
 

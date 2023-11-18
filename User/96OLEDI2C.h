@@ -1,4 +1,5 @@
-#include "ch32v00x_i2c.h"
+//#include "ch32v00x_i2c.h"
+#include "i2c_common.h"
 
 #define OLEDI2C_ADDR    0x3C
 

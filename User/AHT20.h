@@ -4,7 +4,8 @@
 
 */
 
-#include "ch32v00x_i2c.h"
+//#include "ch32v00x_i2c.h"
+#include "i2c_common.h"
 
 
 #define TH_SENSOR_ADDR  0x38

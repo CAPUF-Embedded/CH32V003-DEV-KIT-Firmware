@@ -1,4 +1,4 @@
-User/AHT20.o: ../User/AHT20.c ../User/AHT20.h ../User/i2c_common.h \
+User/i2c_common.o: ../User/i2c_common.c ../User/i2c_common.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_i2c.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Core/core_riscv.h \
@@ -22,8 +22,6 @@ User/AHT20.o: ../User/AHT20.c ../User/AHT20.h ../User/i2c_common.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_wwdg.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_opa.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h
-
-../User/AHT20.h:
 
 ../User/i2c_common.h:
 

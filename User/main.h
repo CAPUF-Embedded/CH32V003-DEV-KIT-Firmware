@@ -8,6 +8,7 @@
 #include "AHT20.h"
 #include "96OLEDI2C.h"
 #include "SerialPort.h"
+#include "i2c_common.h"
 
 /* PWM Output Mode Definition */
 #define PWM_MODE1 0

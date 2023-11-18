@@ -1,4 +1,5 @@
 User/96OLEDI2C.o: ../User/96OLEDI2C.c ../User/96OLEDI2C.h \
+ ../User/i2c_common.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_i2c.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Core/core_riscv.h \
@@ -24,6 +25,8 @@ User/96OLEDI2C.o: ../User/96OLEDI2C.c ../User/96OLEDI2C.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h
 
 ../User/96OLEDI2C.h:
+
+../User/i2c_common.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_i2c.h:
 

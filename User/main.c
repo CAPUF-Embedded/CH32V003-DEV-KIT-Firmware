@@ -340,30 +340,6 @@ void IIC_Init(u32 bound, u16 address)
 }
 
 
-void I2CReadBytes(uint8_t deviceAddress, uint8_t *dataBuffer, uint16_t length)
-{
-    I2C_GenerateSTART( I2C1, ENABLE );
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_MODE_SELECT ) );
-
-    I2C_Send7bitAddress( I2C1, deviceAddress<<1, I2C_Direction_Receiver );
-
-    while( !I2C_CheckEvent( I2C1, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ) );
-    I2C_AcknowledgeConfig( I2C1, ENABLE );
-    //length--;
-    while(length)
-    {
-        if(length ==1) I2C_AcknowledgeConfig( I2C1, DISABLE );
-        if( I2C_GetFlagStatus( I2C1, I2C_FLAG_RXNE ) !=  RESET )
-        {
-            dataBuffer[0] = I2C_ReceiveData( I2C1 );
-            dataBuffer++;
-            length--;
-        }
-    }
-    I2C_GenerateSTOP( I2C1, ENABLE );
-}
-
-
 void DigitSeperation(uint32_t number, uint8_t *buffer, uint8_t length)
 {
     while(length)
@@ -435,11 +411,10 @@ uint32_t uid3 = 0;
 
     Beep();
     UARTDebugPrint(0, "\r\n\r\n");
-    UARTDebugPrint(DEBUG_INFO, "POWER UP BEEP\r\n");
-
     UARTDebugPrint(DEBUG_INFO, "CH32V003 DEV KIT 1.0\r\n");
     UARTDebugPrint(DEBUG_INFO, "DEVELOPED BY: CAPUF EMBEDDED\r\n");
     UARTDebugPrint(DEBUG_INFO, "UART: 115200-1-n\r\n");
+    UARTDebugPrint(DEBUG_INFO, "POWER UP BEEP\r\n");
     Delay_Ms(500);
 
     // Draw Patterns on OLED Display at Power Up
