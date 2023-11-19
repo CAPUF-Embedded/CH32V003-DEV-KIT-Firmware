@@ -8,6 +8,7 @@ C_SRCS += \
 ../User/96OLEDI2C.c \
 ../User/AHT20.c \
 ../User/SerialPort.c \
+../User/SpiFlash.c \
 ../User/ch32v00x_it.c \
 ../User/i2c_common.c \
 ../User/main.c \
@@ -17,6 +18,7 @@ OBJS += \
 ./User/96OLEDI2C.o \
 ./User/AHT20.o \
 ./User/SerialPort.o \
+./User/SpiFlash.o \
 ./User/ch32v00x_it.o \
 ./User/i2c_common.o \
 ./User/main.o \
@@ -26,6 +28,7 @@ C_DEPS += \
 ./User/96OLEDI2C.d \
 ./User/AHT20.d \
 ./User/SerialPort.d \
+./User/SpiFlash.d \
 ./User/ch32v00x_it.d \
 ./User/i2c_common.d \
 ./User/main.d \

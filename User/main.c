@@ -47,6 +47,10 @@ uint8_t digitSep[4] = {0};
 uint32_t adcReading = 0;
 uint8_t adcFlag = 0;
 
+uint8_t txBuffer[256] = {0};
+uint8_t rxBuffer[256] = {0};
+uint8_t spiFlashID[4] = {0};
+
 uint16_t GetMCUFlashSize( void )
 {
     return( *( uint16_t * )0x1FFFF7E0 );
@@ -64,6 +68,78 @@ uint32_t GetMCUUID2( void )
 uint32_t GetMCUUID3( void )
 {
     return( *( uint32_t * )0x1FFFF7F0 );
+}
+
+/*********************************************************************
+ * @fn      SPI_FullDuplex_Init
+ *
+ * @brief   Configuring the SPI for full-duplex communication.
+ *
+ * @return  none
+ */
+void SPI_FullDuplex_Init(void)
+{
+    GPIO_InitTypeDef GPIO_InitStructure={0};
+    SPI_InitTypeDef SPI_InitStructure={0};
+
+    RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOC | RCC_APB2Periph_SPI1, ENABLE );
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        GPIO_Init( GPIOC, &GPIO_InitStructure );
+
+#if (SPI_MODE == HOST_MODE)
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init( GPIOC, &GPIO_InitStructure );
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIO_Init( GPIOC, &GPIO_InitStructure );
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init( GPIOC, &GPIO_InitStructure );
+
+#elif (SPI_MODE == SLAVE_MODE)
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIO_Init( GPIOC, &GPIO_InitStructure );
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init( GPIOC, &GPIO_InitStructure );
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIO_Init( GPIOC, &GPIO_InitStructure );
+
+#endif
+
+    SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+
+#if (SPI_MODE == HOST_MODE)
+    SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+
+#elif (SPI_MODE == SLAVE_MODE)
+    SPI_InitStructure.SPI_Mode = SPI_Mode_Slave;
+
+#endif
+
+    SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
+    SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
+    SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;
+    SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_256;
+    SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+    SPI_InitStructure.SPI_CRCPolynomial = 7;
+    SPI_Init( SPI1, &SPI_InitStructure );
+
+    SPI_Cmd( SPI1, ENABLE );
 }
 
 void RGB_PWMConfig(u16 arr, u16 psc, u16 ccp)
@@ -400,6 +476,9 @@ uint32_t uid3 = 0;
     //uid2 = GetMCUUID2();
     //uid3 = GetMCUUID3();
     GPIOConfig();
+    SPI_FullDuplex_Init();
+    GPIO_SetBits(GPIOC, GPIO_Pin_3);
+
     KeysConfig();
 
     UsartConfig();
@@ -409,7 +488,7 @@ uint32_t uid3 = 0;
     OLEDI2CInit();
     ADCConfig();
 
-    Beep();
+    //Beep();
     UARTDebugPrint(0, "\r\n\r\n");
     UARTDebugPrint(DEBUG_INFO, "CH32V003 DEV KIT 1.0\r\n");
     UARTDebugPrint(DEBUG_INFO, "DEVELOPED BY: CAPUF EMBEDDED\r\n");
@@ -448,7 +527,20 @@ uint32_t uid3 = 0;
     SetRGB(0x00FFFFFF);//RGB LED OFF
 
     OLEDI2CFillScreen(0x00); // Clear OLED Display
+
+    SPIFlashReadID(spiFlashID);
+    if(spiFlashID[1] == 0xEF)
+    {
+        UARTDebugPrint(DEBUG_INFO, "FLASH ID READ SUCCESS\r\n");
+    }
+
+    SpiFlashReadData(0, rxBuffer, 10);
+    UARTDebugPrint(DEBUG_INFO, "SPI DATA READ>");
+    UARTSendBuffer(rxBuffer, 10);
+    UARTSendBuffer("\r\n", 2);
+
     UARTDebugPrint(DEBUG_INFO, "ENTERING SUPERLOOP\r\n");
+
 
     while(1)
     {
@@ -516,6 +608,9 @@ uint32_t uid3 = 0;
         if(Rxfinish1)
         {
             UARTDebugPrint(DEBUG_INFO, "UART DATA RECEIVED :)\r\n");
+            UARTDebugPrint(DEBUG_INFO, "FLASH DATA WRITE DONE\r\n");
+            SPIFlashEraseSector(0);
+            SpiFlashWritePage(0, RxBuffer1, 10);
             Rxfinish1 = 0;
         }
 
@@ -564,7 +659,7 @@ void USART1_IRQHandler(void)
     {
         RxBuffer1[RxCnt1++] = USART_ReceiveData(USART1);
 
-        if(RxCnt1 >= 5)
+        if(RxCnt1 >= 10)
         {
             //USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
             RxCnt1 = 0;

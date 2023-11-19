@@ -1,5 +1,5 @@
-User/main.o: ../User/main.c ../User/main.h \
- C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Debug/debug.h \
+User/SpiFlash.o: ../User/SpiFlash.c ../User/SpiFlash.h \
+ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_spi.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Core/core_riscv.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT-FIRMWARE\User/system_ch32v00x.h \
@@ -12,22 +12,20 @@ User/main.o: ../User/main.c ../User/main.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_gpio.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_i2c.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT-FIRMWARE\User/ch32v00x_it.h \
+ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Debug/debug.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_iwdg.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_misc.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_pwr.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_rcc.h \
- C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_spi.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_tim.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_usart.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_wwdg.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_opa.h \
- C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h \
- ../User/AHT20.h ../User/i2c_common.h ../User/96OLEDI2C.h \
- ../User/SerialPort.h ../User/SpiFlash.h
+ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h
 
-../User/main.h:
+../User/SpiFlash.h:
 
-C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Debug/debug.h:
+C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_spi.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h:
 
@@ -53,6 +51,8 @@ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_i
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\GPIO\CH32V003-DEV-KIT-FIRMWARE\User/ch32v00x_it.h:
 
+C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Debug/debug.h:
+
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_iwdg.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_misc.h:
@@ -60,8 +60,6 @@ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_m
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_pwr.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_rcc.h:
-
-C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_spi.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_tim.h:
 
@@ -72,13 +70,3 @@ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_w
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_opa.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h:
-
-../User/AHT20.h:
-
-../User/i2c_common.h:
-
-../User/96OLEDI2C.h:
-
-../User/SerialPort.h:
-
-../User/SpiFlash.h:

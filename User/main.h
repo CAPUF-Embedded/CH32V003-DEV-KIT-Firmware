@@ -9,6 +9,14 @@
 #include "96OLEDI2C.h"
 #include "SerialPort.h"
 #include "i2c_common.h"
+#include "SpiFlash.h"
+
+/* SPI Mode Definition */
+#define HOST_MODE   0
+#define SLAVE_MODE   1
+
+/* SPI Communication Mode Selection */
+#define SPI_MODE   HOST_MODE
 
 /* PWM Output Mode Definition */
 #define PWM_MODE1 0
