@@ -12,3 +12,5 @@ void OLEDI2CPutStr(uint8_t line, uint8_t startingColumn, char* stringToPrint, ui
 void OLEDI2CFillScreen(uint8_t data);
 void OLEDI2CWriteMuiltiByte(uint8_t deviceAddr, uint8_t memoryAddr, uint8_t *buffer, uint16_t length);
 void OLEDI2CPattern(void);
+void OLEDI2CDrawImage(const uint8_t* image);
+

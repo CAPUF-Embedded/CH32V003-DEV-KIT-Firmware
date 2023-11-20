@@ -5,6 +5,7 @@ encoding//Peripheral/inc/ch32v00x_exti.h=GBK
 encoding//Peripheral/inc/ch32v00x_gpio.h=GBK
 encoding//Peripheral/inc/ch32v00x_i2c.h=GBK
 encoding//Peripheral/inc/ch32v00x_rcc.h=GBK
+encoding//Peripheral/inc/ch32v00x_spi.h=GBK
 encoding//Peripheral/src/ch32v00x_exti.c=GBK
 encoding//Peripheral/src/ch32v00x_gpio.c=GBK
 encoding//Peripheral/src/ch32v00x_i2c.c=GBK

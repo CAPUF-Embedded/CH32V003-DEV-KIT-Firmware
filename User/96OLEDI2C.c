@@ -250,3 +250,18 @@ void OLEDI2CPattern(void)
     Delay_Ms(250);
     OLEDI2CFillScreen(0x00); // Blank Full Screen
 }
+
+void OLEDI2CDrawImage(const uint8_t* image)
+{
+    uint8_t pageNumber = 0;
+
+    for (pageNumber = 0; pageNumber < 8; pageNumber++)
+    {
+        OLEDI2CCMD(OLEDI2C_ADDR, 0xB0 + pageNumber);
+        OLEDI2CCMD(OLEDI2C_ADDR, 0x00);
+        OLEDI2CCMD(OLEDI2C_ADDR, 0x10);
+
+        /* Write 128 bytes data */
+        OLEDI2CWriteMuiltiByte(OLEDI2C_ADDR, 0x40, (const)(image +(128 * pageNumber)), 128);
+    }
+}
