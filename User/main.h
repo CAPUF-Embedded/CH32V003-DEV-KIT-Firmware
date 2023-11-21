@@ -45,18 +45,9 @@
 #define SW3_PIN         GPIO_Pin_2
 #define SW3_PORT        GPIOA
 
-#define I2C_BAUD        400000
-#define I2C_SELF_ADDR   0x44
-
-#define I2C_SCL_PIN     GPIO_Pin_2
-#define I2C_SDA_PIN     GPIO_Pin_1
-#define I2C_SCL_PORT    GPIOC
-#define I2C_SDA_PORT    GPIOC
-
 #define ANALOG1_PIN     GPIO_Pin_4
 #define ANALOG1_PORT    GPIOD
 
 void DigitSeperation(uint32_t number, uint8_t *buffer, uint8_t length);
-void UARTSendString(uint8_t* buffer);
 
 

@@ -75,9 +75,7 @@ void UARTSendString(uint8_t* buffer)
 
     for(tmp =0; tmp < len; tmp++)
     {
-        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET) /* waiting for sending finish */
-        {
-        }
+        while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET); /* waiting for sending finish */
         USART_SendData(USART1, buffer[tmp]);
     }
 

@@ -12,6 +12,7 @@ C_SRCS += \
 ../User/ch32v00x_it.c \
 ../User/i2c_common.c \
 ../User/main.c \
+../User/spi_common.c \
 ../User/system_ch32v00x.c 
 
 OBJS += \
@@ -22,6 +23,7 @@ OBJS += \
 ./User/ch32v00x_it.o \
 ./User/i2c_common.o \
 ./User/main.o \
+./User/spi_common.o \
 ./User/system_ch32v00x.o 
 
 C_DEPS += \
@@ -32,6 +34,7 @@ C_DEPS += \
 ./User/ch32v00x_it.d \
 ./User/i2c_common.d \
 ./User/main.d \
+./User/spi_common.d \
 ./User/system_ch32v00x.d 
 
 

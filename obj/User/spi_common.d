@@ -1,4 +1,4 @@
-User/SpiFlash.o: ../User/SpiFlash.c ../User/SpiFlash.h \
+User/spi_common.o: ../User/spi_common.c ../User/spi_common.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_spi.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Core/core_riscv.h \
@@ -21,10 +21,9 @@ User/SpiFlash.o: ../User/SpiFlash.c ../User/SpiFlash.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_usart.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_wwdg.h \
  C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_opa.h \
- C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h \
- ../User/spi_common.h
+ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h
 
-../User/SpiFlash.h:
+../User/spi_common.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_spi.h:
 
@@ -71,5 +70,3 @@ C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_w
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x_opa.h:
 
 C:\Users\91998\Downloads\CH32V003EVT\ (1)\EVT\EXAM\SRC\Peripheral\inc/ch32v00x.h:
-
-../User/spi_common.h:

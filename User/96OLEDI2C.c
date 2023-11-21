@@ -262,6 +262,6 @@ void OLEDI2CDrawImage(const uint8_t* image)
         OLEDI2CCMD(OLEDI2C_ADDR, 0x10);
 
         /* Write 128 bytes data */
-        OLEDI2CWriteMuiltiByte(OLEDI2C_ADDR, 0x40, (const)(image +(128 * pageNumber)), 128);
+        OLEDI2CWriteMuiltiByte(OLEDI2C_ADDR, 0x40, (uint8_t *)(image +(128 * pageNumber)), 128);
     }
 }
