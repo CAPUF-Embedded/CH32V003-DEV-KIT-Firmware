@@ -47,8 +47,9 @@ uint8_t digitSep[4] = {0};
 uint32_t adcReading = 0;
 uint8_t adcFlag = 0;
 
-uint8_t txBuffer[256] = {0};
-uint8_t rxBuffer[256] = {0};
+//SPI
+uint8_t spiTxBuffer[256] = {0};
+uint8_t spiRxBuffer[256] = {0};
 uint8_t spiFlashID[4] = {0};
 
 // 128x64 CAPUF EMBEDDED LOGO
@@ -551,11 +552,10 @@ uint32_t uid3 = 0;
     {
         UARTDebugPrint(DEBUG_INFO, "FLASH ID READ SUCCESS\r\n");
     }
-
-    SpiFlashReadData(0, rxBuffer, 10);
-    UARTDebugPrint(DEBUG_INFO, "SPI DATA READ>");
-    UARTSendBuffer(rxBuffer, 10);
-    UARTSendBuffer("\r\n", 2);
+    else
+    {
+        UARTDebugPrint(DEBUG_INFO, "FLASH ID READ FAIL\r\n");
+    }
 
     UARTDebugPrint(DEBUG_INFO, "ENTERING SUPERLOOP\r\n");
 
@@ -631,6 +631,11 @@ uint32_t uid3 = 0;
             Rxfinish1 = 0;
         }
 
+        memset(spiRxBuffer, 0x00, 10);
+        SpiFlashReadData(0, spiRxBuffer, 10);
+        UARTDebugPrint(DEBUG_INFO, "SPI DATA READ>");
+        UARTSendBuffer(spiRxBuffer, 10);
+        UARTSendBuffer("\r\n\r\n", 4);
 
     }
 }

@@ -79,7 +79,6 @@ void UARTSendString(uint8_t* buffer)
         USART_SendData(USART1, buffer[tmp]);
     }
 
-
 }
 
 void UARTSendBuffer(uint8_t* buffer, uint16_t length)
