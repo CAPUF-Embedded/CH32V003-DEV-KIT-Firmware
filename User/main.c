@@ -503,7 +503,7 @@ uint32_t uid3 = 0;
     OLEDI2CInit();
     ADCConfig();
 
-    //Beep();
+    Beep();
 
     OLEDI2CDrawImage((uint8_t *)CAPUFLOGO); // SHOW CAPUF EMBEDDED LOGO
     Delay_Ms(1500);
